@@ -1,0 +1,13 @@
+name = "glog"
+version = "0.1.0"
+
+licences = ["Apache-2.0"]
+description = "A Gleam implementation of Erlang logger"
+repository = { type = "github", user = "defgenx", repo = "glog" }
+
+[dependencies]
+gleam_stdlib = "~> 0.24"
+gleam_erlang = "~> 0.17"
+
+[dev-dependencies]
+gleeunit = "~> 0.6"
