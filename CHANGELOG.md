@@ -1,6 +1,11 @@
 CHANGE LOG
 ==========
 
+## v0.2.1 - 2022-11-28
+
+* fix(main): delete main function
+* fix(documentation): fix not generated information
+
 ## v0.2.0 - 2022-11-28
 
 * feat(api): adding add_* functions
