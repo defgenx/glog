@@ -7,8 +7,8 @@ A Gleam implementation of Erlang logger inspired from [Logrus](https://github.co
 
 ![](assets/small_glog_logo.png)
 
-
 ## Task List
+
 - [x] Write documentation
 - [x] Add unit tests
 - [x] Improve API with `add_error`, `add_result` `add_option`...
@@ -16,25 +16,35 @@ A Gleam implementation of Erlang logger inspired from [Logrus](https://github.co
 - [ ] Implement various methodologies. Compute storage while adding, compute only on log emit or a hybrid mechanism.
 
 ## Usage
+
+The Erlang logger is asynchronous by default, please read the [logger chapter](https://www.erlang.org/doc/apps/kernel/logger_chapter.html#message-queue-length)
+
 ```gleam
- import glog.{Glog}
- import glog/field
- import glog/arg
+import gleam/io
+import glog
+import glog/field
+import glog/arg
+import glog/level
 
- let logger: Glog = glog.new()
- 
- // Set recommended default config
- glog.set_default_config()
- 
- // Add value and a field to log
- // Print Info with template
- logger
- |> add("foo", "bar")
- |> add_field(field.new("woo", "zoo"))
- |> infof("I'll be ~p", [arg.new("back")])
 
+pub fn main() {
+  let logger = glog.new()
+  glog.set_primary_log_level(level.All)
+  glog.set_default_config()
+
+  logger
+  |> glog.add("foo", "bar")
+  |> glog.add_field(field.new("woo", "zoo"))
+  |> glog.infof("I'll be ~p", [arg.new("back")])
+}
 ```
 
+## Things to know
+
+* Gleam do not support configuration files at the moment. To load a custom Erlang config file use the following
+  command: `ERL_FLAGS='-config <config_file>' gleam run`
+    * Please read the [logger documentation](https://www.erlang.org/doc/man/logger.html) to know more about
+      configuration files
 
 ## Quick start
 
