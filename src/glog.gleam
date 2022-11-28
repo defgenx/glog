@@ -6,10 +6,8 @@ import gleam/option.{None, Option, Some}
 import gleam/dynamic.{Dynamic}
 import glog/arg.{Args}
 import glog/field.{Field, Fields}
-import glog/config.{Config}
 import glog/level.{
-  Alert, ConfigLevel, Critical, Debug, Emergency, Err, Info, Level, Notice,
-  Warning,
+  Alert, ConfigLevel, Critical, Debug, Emergency, Info, Level, Notice, Warning,
 }
 import gleam/io
 
@@ -227,14 +225,14 @@ pub fn criticalf(logger: Glog, string: String, values: Args) -> Glog {
 ///
 /// Calling this function return a new Glog. Old Glog can still be used.
 pub fn error(logger: Glog, message: String) -> Glog {
-  log(logger, Err, message)
+  log(logger, level.Error, message)
 }
 
 /// Prints Err log with current fields stored and the given message template and values
 ///
 /// Calling this function return a new Glog. Old Glog can still be used.
 pub fn errorf(logger: Glog, string: String, values: Args) -> Glog {
-  logf(logger, Err, string, values)
+  logf(logger, level.Error, string, values)
 }
 
 /// Prints Warning log with current fields stored and the given message
@@ -367,14 +365,8 @@ pub fn set_default_config() {
 external fn log_with_fields(Level, Map(Atom, Dynamic)) -> Nil =
   "logger" "log"
 
-pub external fn set_primary_config(Config) -> Nil =
-  "logger" "set_primary_config"
-
 external fn set_primary_config_value(Atom, Dynamic) -> Nil =
   "logger" "set_primary_config"
-
-pub external fn set_handler_config(Atom, Config) -> Nil =
-  "logger" "set_handler_config"
 
 external fn set_handler_config_value(Atom, Atom, Dynamic) -> Nil =
   "logger" "set_handler_config"
