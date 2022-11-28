@@ -381,10 +381,3 @@ external fn set_handler_config_value(Atom, Atom, Dynamic) -> Nil =
 
 external fn sprintf(String, List(Dynamic)) -> String =
   "io_lib" "format"
-
-pub fn main() {
-  new()
-  |> add_result("foo", Error("failure"))
-  |> emergency("foo")
-  io.print("lolol")
-}
