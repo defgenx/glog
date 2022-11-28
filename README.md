@@ -9,10 +9,31 @@ A Gleam implementation of Erlang logger inspired from [Logrus](https://github.co
 
 
 ## Task List
-- [ ] Write documentation
+- [x] Write documentation
 - [ ] Add unit tests
-- [ ] Improve API with `add_error`, `add_result` `add_ooption`...
+- [ ] Improve API with `add_error`, `add_result` `add_option`...
 - [ ] Add an API to configure the logger easier and deeper
+
+## Usage
+```gleam
+ import glog.{Glog}
+ import glog/field
+ import glog/arg
+
+ let logger: Glog = glog.new()
+ 
+ // Set recommended default config
+ glog.set_default_config()
+ 
+ // Add value and a field to log
+ // Print Info with template
+ logger
+ |> add("foo", "bar")
+ |> add_field(field.new("woo", "zoo"))
+ |> infof("I'll be ~p", [arg.new("back")])
+
+```
+
 
 ## Quick start
 

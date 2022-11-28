@@ -28,6 +28,7 @@ pub external type All
 // No level
 pub external type None
 
+// Logger levels valid list
 pub type Level {
   Emergency
   Alert
@@ -39,7 +40,8 @@ pub type Level {
   Debug
 }
 
-pub type LevelConfig {
+// Logger levels valid configuration list
+pub type ConfigLevel {
   Level
   All
   None
