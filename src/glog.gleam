@@ -1,8 +1,10 @@
 import gleam/erlang/atom.{Atom}
 import gleam/map.{Map}
+import gleam/result
 import gleam/list
+import gleam/option.{None, Option, Some}
 import gleam/dynamic.{Dynamic}
-import glog/arg.{Arg, Args}
+import glog/arg.{Args}
 import glog/field.{Field, Fields}
 import glog/config.{Config}
 import glog/level.{
@@ -26,6 +28,28 @@ pub opaque type Glog {
 /// ```
 pub fn new() -> Glog {
   Glog(fields: map.new())
+}
+
+/// Initializes a new Glog representation with fields
+pub fn new_with(with: Option(Fields)) -> Glog {
+  case with {
+    Some(fields) ->
+      new()
+      |> add_fields(fields)
+    None -> new()
+  }
+}
+
+/// Finds if a field exists from its key
+pub fn has_field(logger: Glog, key: String) -> Bool {
+  map.has_key(logger.fields, atom.create_from_string(key))
+}
+
+/// Fetches a field if it exists from its key
+pub fn get_field(logger: Glog, key: String) -> Result(Field, Nil) {
+  logger.fields
+  |> map.get(atom.create_from_string(key))
+  |> result.map(fn(value) { field.new(key, value) })
 }
 
 /// Adds a key/value to the current log
@@ -214,9 +238,9 @@ fn log(logger: Glog, level: Level, message: String) -> Glog {
   let new_logger =
     logger
     |> add("msg", message)
-  log_string_with_fields(level, new_logger.fields)
+  log_with_fields(level, new_logger.fields)
 
-  Glog(fields: map.new())
+  logger
 }
 
 // Private function handling the printf logic for any level
@@ -280,15 +304,7 @@ pub fn set_default_config() {
   )
 }
 
-external fn log_string_with_fields(Level, Map(Atom, Dynamic)) -> Nil =
-  "logger" "log"
-
-external fn log_string_with_list_map(
-  Level,
-  String,
-  List(Dynamic),
-  Map(Atom, Dynamic),
-) -> Nil =
+external fn log_with_fields(Level, Map(Atom, Dynamic)) -> Nil =
   "logger" "log"
 
 pub external fn set_primary_config(Config) -> Nil =
@@ -302,18 +318,6 @@ pub external fn set_handler_config(Atom, Config) -> Nil =
 
 external fn set_handler_config_value(Atom, Atom, Dynamic) -> Nil =
   "logger" "set_handler_config"
-
-external fn add_handler(Atom, Atom, Dynamic) -> Nil =
-  "logger" "add_handler"
-
-external fn get_handler_ids() -> List(Atom) =
-  "logger" "get_handler_ids"
-
-external fn get_handler_config(Atom) -> Dynamic =
-  "logger" "get_handler_config"
-
-external fn remove_handler(Atom) -> Nil =
-  "logger" "remove_handler"
 
 external fn sprintf(String, List(Dynamic)) -> String =
   "io_lib" "format"

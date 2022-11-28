@@ -1,5 +1,4 @@
 import gleam/dynamic.{Dynamic}
-import gleam/erlang/atom.{Atom}
 
 // Field opaque representation
 pub opaque type Field {
