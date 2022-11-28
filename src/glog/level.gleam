@@ -33,7 +33,7 @@ pub type Level {
   Emergency
   Alert
   Critical
-  Error
+  Err
   Warning
   Notice
   Info

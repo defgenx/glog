@@ -8,9 +8,10 @@ import glog/arg.{Args}
 import glog/field.{Field, Fields}
 import glog/config.{Config}
 import glog/level.{
-  Alert, ConfigLevel, Critical, Debug, Emergency, Error, Info, Level, Notice,
+  Alert, ConfigLevel, Critical, Debug, Emergency, Err, Info, Level, Notice,
   Warning,
 }
+import gleam/io
 
 /// A Gleam implementation of Erlang logger
 /// Glog is the current "state" of the log to print
@@ -88,6 +89,65 @@ pub fn add_field(logger: Glog, f: Field) -> Glog {
   )
 }
 
+/// Adds a Result to the current log
+///
+/// ### Usage
+/// ```gleam
+/// import glog.{Glog}
+/// import glog/field
+///
+/// let logger: Glog = glog.new()
+/// logger
+/// |> add_result("foo", Ok("foo"))
+/// ```
+pub fn add_result(logger: Glog, key: String, r: Result(a, b)) -> Glog {
+  case r {
+    Ok(v) ->
+      logger
+      |> add(key, v)
+
+    Error(e) ->
+      logger
+      |> add_error(e)
+  }
+}
+
+/// Adds an Option to the current log
+///
+/// ### Usage
+/// ```gleam
+/// import glog.{Glog}
+/// import glog/field
+///
+/// let logger: Glog = glog.new()
+/// logger
+/// |> add_option("foo", Some("foo"))
+/// ```
+pub fn add_option(logger: Glog, key: String, o: Option(a)) -> Glog {
+  case o {
+    Some(v) ->
+      logger
+      |> add(key, v)
+    None -> logger
+  }
+}
+
+/// Adds an error key to the current log
+///
+/// ### Usage
+/// ```gleam
+/// import glog.{Glog}
+/// import glog/field
+///
+/// let logger: Glog = glog.new()
+/// logger
+/// |> add_error("foo")
+/// ```
+pub fn add_error(logger: Glog, error: a) -> Glog {
+  logger
+  |> add("error", error)
+}
+
 /// Adds Fields to the current log
 ///
 /// ### Usage
@@ -163,18 +223,18 @@ pub fn criticalf(logger: Glog, string: String, values: Args) -> Glog {
   logf(logger, Critical, string, values)
 }
 
-/// Prints Error log with current fields stored and the given message
+/// Prints Err log with current fields stored and the given message
 ///
 /// Calling this function return a new Glog. Old Glog can still be used.
 pub fn error(logger: Glog, message: String) -> Glog {
-  log(logger, Error, message)
+  log(logger, Err, message)
 }
 
-/// Prints Error log with current fields stored and the given message template and values
+/// Prints Err log with current fields stored and the given message template and values
 ///
 /// Calling this function return a new Glog. Old Glog can still be used.
 pub fn errorf(logger: Glog, string: String, values: Args) -> Glog {
-  logf(logger, Error, string, values)
+  logf(logger, Err, string, values)
 }
 
 /// Prints Warning log with current fields stored and the given message
@@ -321,3 +381,10 @@ external fn set_handler_config_value(Atom, Atom, Dynamic) -> Nil =
 
 external fn sprintf(String, List(Dynamic)) -> String =
   "io_lib" "format"
+
+pub fn main() {
+  new()
+  |> add_result("foo", Error("failure"))
+  |> emergency("foo")
+  io.print("lolol")
+}
