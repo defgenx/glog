@@ -6,7 +6,6 @@ import gleam/option.{None, Option, Some}
 import gleam/dynamic.{Dynamic}
 import glog/arg.{Args}
 import glog/field.{Field, Fields}
-import glog/config.{Config}
 import glog/level.{
   Alert, ConfigLevel, Critical, Debug, Emergency, Err, Info, Level, Notice,
   Warning,
@@ -367,14 +366,8 @@ pub fn set_default_config() {
 external fn log_with_fields(Level, Map(Atom, Dynamic)) -> Nil =
   "logger" "log"
 
-pub external fn set_primary_config(Config) -> Nil =
-  "logger" "set_primary_config"
-
 external fn set_primary_config_value(Atom, Dynamic) -> Nil =
   "logger" "set_primary_config"
-
-pub external fn set_handler_config(Atom, Config) -> Nil =
-  "logger" "set_handler_config"
 
 external fn set_handler_config_value(Atom, Atom, Dynamic) -> Nil =
   "logger" "set_handler_config"

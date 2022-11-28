@@ -12,8 +12,7 @@ A Gleam implementation of Erlang logger inspired from [Logrus](https://github.co
 - [x] Write documentation
 - [x] Add unit tests
 - [x] Improve API with `add_error`, `add_result` `add_option`...
-- [ ] Add an API to configure the logger easier and deeper
-- [ ] Implement various methodologies. Compute storage while adding, compute only on log emit or a hybrid mechanism.
+- [ ] Add an API to configure the logger (custom configuration file)
 
 ## Usage
 
