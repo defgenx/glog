@@ -1,34 +1,34 @@
-//system is unusable
+/// system is unusable
 pub external type Emergency
 
-// action must be taken immediately
+/// action must be taken immediately
 pub external type Alert
 
-// critical conditions
+/// critical conditions
 pub external type Critical
 
-// error conditions
+/// error conditions
 pub external type Error
 
-// warning conditions
+/// warning conditions
 pub external type Warning
 
-// normal but significant conditions
+/// normal but significant conditions
 pub external type Notice
 
-// informational messages
+/// informational messages
 pub external type Info
 
-// debug-level messages
+/// debug-level messages
 pub external type Debug
 
-// all levels
+/// all levels
 pub external type All
 
-// No level
+/// No level
 pub external type None
 
-// Logger levels valid list
+/// Logger levels valid list
 pub type Level {
   Emergency
   Alert
@@ -40,7 +40,7 @@ pub type Level {
   Debug
 }
 
-// Logger levels valid configuration list
+/// Logger levels valid configuration list
 pub type ConfigLevel {
   Level
   All
