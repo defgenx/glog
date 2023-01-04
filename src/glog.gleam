@@ -7,8 +7,7 @@ import gleam/dynamic.{Dynamic}
 import glog/arg.{Args}
 import glog/field.{Field, Fields}
 import glog/level.{
-  Alert, ConfigLevel, Critical, Debug, Emergency, Err, Info, Level, Notice,
-  Warning,
+  Alert, ConfigLevel, Critical, Debug, Emergency, Info, Level, Notice, Warning,
 }
 import gleam/io
 
@@ -226,14 +225,14 @@ pub fn criticalf(logger: Glog, string: String, values: Args) -> Glog {
 ///
 /// Calling this function return a new Glog. Old Glog can still be used.
 pub fn error(logger: Glog, message: String) -> Glog {
-  log(logger, Err, message)
+  log(logger, level.Error, message)
 }
 
 /// Prints Err log with current fields stored and the given message template and values
 ///
 /// Calling this function return a new Glog. Old Glog can still be used.
 pub fn errorf(logger: Glog, string: String, values: Args) -> Glog {
-  logf(logger, Err, string, values)
+  logf(logger, level.Error, string, values)
 }
 
 /// Prints Warning log with current fields stored and the given message
