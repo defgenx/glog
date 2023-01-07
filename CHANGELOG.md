@@ -1,6 +1,10 @@
 CHANGE LOG
 ==========
 
+## v0.2.2 - 2023-01-07
+
+fix(config): delete unused config struct and methods
+
 ## v0.2.1 - 2022-11-28
 
 * fix(main): delete main function
