@@ -19,7 +19,6 @@ A Gleam implementation of Erlang logger inspired from [Logrus](https://github.co
 The Erlang logger is asynchronous by default, please read the [logger chapter](https://www.erlang.org/doc/apps/kernel/logger_chapter.html#message-queue-length)
 
 ```gleam
-import gleam/io
 import glog
 import glog/field
 import glog/arg
