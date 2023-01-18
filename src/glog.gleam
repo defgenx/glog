@@ -9,7 +9,6 @@ import glog/field.{Field, Fields}
 import glog/level.{
   Alert, ConfigLevel, Critical, Debug, Emergency, Info, Level, Notice, Warning,
 }
-import gleam/io
 
 /// A Gleam implementation of Erlang logger
 /// Glog is the current "state" of the log to print
